@@ -7,10 +7,14 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 import { AngularMaterialModule } from './angular-material.module';
+import { MainFormComponent } from './components/main-form/main-form.component';
+import { ResultsComponent } from './components/results/results.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    MainFormComponent,
+    ResultsComponent
   ],
   imports: [
     BrowserModule,
