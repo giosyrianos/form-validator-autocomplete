@@ -15,13 +15,23 @@ export class MainFormComponent implements OnInit {
 	ngOnInit(): void {
 		this.myForm = this.fb.group({
 			name: ['',
-				Validators.required,
-				Validators.pattern('^[a-zA-Z \-\']+')],
+				[Validators.required,
+				Validators.pattern('^[a-zA-Z \-\']+')]],
 			userName: ['', Validators.email],
-			country: [''],
+			country: ['', Validators.required],
 			postCode: [''],
 			favMovie: ''
 		});
   }
 
+	// Getters to simplify HTML template
+	get name() { return this.myForm.get('name'); }
+	get userName() { return this.myForm.get('userName'); }
+	get country () { return this.myForm.get('country'); }
+	get postCode() { return this.myForm.get('postCode'); }
+	get favMovie() { return this.myForm.get('favMovie'); }
+
+	submitForm() {
+		console.log(this.myForm);
+	}
 }
