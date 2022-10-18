@@ -1,1 +1,39 @@
-<p>main-form works!</p>
+<form [formGroup]="myForm">
+	<div>
+		<label>Personal info</label>
+		<mat-form-field>
+			<input matInput formControlName="name" autocomplete="off" placeholder="Name">
+		</mat-form-field>
+
+		<mat-form-field>
+			<input matInput formControlName="userName" autocomplete="off" placeholder="Email">
+		</mat-form-field>
+	</div>
+
+	<div>
+		<label>Location Info</label>
+		<mat-form-field>
+			<mat-select matInput placeholder="Select Country" formControlName="country" type="text">
+				<mat-option *ngFor="let country of countryOptions" [value]="country">{{country}}</mat-option>
+			</mat-select>
+		</mat-form-field>
+
+		<mat-form-field>
+			<input matInput formControlName="postCode" autocomplete="off" placeholder="PostCode">
+		</mat-form-field>
+	</div>
+
+	<div>
+		<label>Favorite Movie</label>
+		<mat-form-field class="example-full-width" appearance="fill">
+			<input type="text" placeholder="Start typing..." aria-label="Movie" matInput formControlName="favMovie"
+				[matAutocomplete]="auto">
+			<mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+				<mat-option *ngFor="let movie of movieList" [value]="movie">
+					{{movie}}
+				</mat-option>
+			</mat-autocomplete>
+		</mat-form-field>
+	</div>
+
+</form>

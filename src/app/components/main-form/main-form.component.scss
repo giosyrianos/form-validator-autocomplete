@@ -1,0 +1,14 @@
+form {
+	display: flex;
+	flex-direction: column;
+	gap: 1rem;
+	width: 100%;
+	min-width: 40vw;
+}
+
+form > div {
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+	padding: 1rem 0;
+}
