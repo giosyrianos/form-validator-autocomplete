@@ -23,8 +23,10 @@
 		</mat-form-field>
 
 		<mat-form-field>
-			<input matInput formControlName="postCode" autocomplete="off" placeholder="PostCode">
+			<input matInput formControlName="postCode" autocomplete="off" placeholder="Post Code">
 		</mat-form-field>
+		<small class="error" *ngIf="myForm?.errors?.falsePostCode">Post Code is not UK valid</small>
+		<small class="error" *ngIf="myForm?.errors?.emptyPostCode">Post Code is required for UK</small>
 	</div>
 
 	<div>
