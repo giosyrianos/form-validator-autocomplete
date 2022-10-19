@@ -16,7 +16,7 @@
 	<div>
 		<label>Location Info</label>
 		<mat-form-field>
-			<mat-select matInput placeholder="Select Country" formControlName="country" type="text">
+			<mat-select matInput name="country" ngDefaultControl placeholder="Select Country" formControlName="country" type="text">
 				<mat-option *ngFor="let country of countryOptions" [value]="country">{{country}}</mat-option>
 			</mat-select>
 			<mat-error *ngIf="country?.errors"> Please select a country </mat-error>
@@ -28,7 +28,7 @@
 		<small class="error" *ngIf="myForm?.errors?.falsePostCode">This is not a valid UK Post Code</small>
 		<small class="error" *ngIf="myForm?.errors?.emptyPostCode">Post Code is required for UK</small>
 	</div>
-
+<!--
 	<div>
 		<label>Favorite Movie</label>
 		<mat-form-field class="example-full-width" appearance="fill">
@@ -40,6 +40,6 @@
 				</mat-option>
 			</mat-autocomplete>
 		</mat-form-field>
-	</div>
+	</div> -->
 	<button mat-raised-button color="primary" type="submit">Submit!</button>
 </form>
