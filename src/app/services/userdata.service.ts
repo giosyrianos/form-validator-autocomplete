@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
 import { Subject } from 'rxjs/internal/Subject';
 import { Roomex } from '../models/roomexForm.model';
 
@@ -7,8 +8,8 @@ import { Roomex } from '../models/roomexForm.model';
   providedIn: 'root'
 })
 export class UserdataService {
-	private userData: Roomex;
-	private userDataListener = new Subject<Roomex>();
+	userData: Roomex;
+	userDataListener = new BehaviorSubject<Roomex>({} as Roomex);
 	constructor(private router: Router) { }
 
 	// This is a simple example of a service that can be used to store data

@@ -1,1 +1,12 @@
-<p>results works!</p>
+<h3>User data</h3>
+<div>
+	<ul *ngIf="storedData; else noDataBlock">
+		<li *ngFor="let item of storedData | keyvalue ">
+			{{ item.key }}: {{ item.value ? item.value : 'N/A' }}
+		</li>
+	</ul>
+	<ng-template #noDataBlock>
+		<p>No data to display</p>
+	</ng-template>
+	<small>{{ storedData | json}} </small>
+</div>
