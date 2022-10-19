@@ -48,7 +48,7 @@ export class MainFormComponent implements OnInit {
 	get favMovie() { return this.myForm.get('favMovie'); }
 
 	submitForm() {
-		console.log(this.myForm);
+		// console.log(this.myForm);
 		if(this.myForm.invalid) {
 			console.error('Form is invalid');
 			return
