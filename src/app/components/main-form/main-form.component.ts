@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { postCodeValidator } from './postCode.validator';
 import { UserdataService } from '../../services/userdata.service';
-
+import { HttpClient } from '@angular/common/http'
 
 import { debounceTime, tap, switchMap, finalize, distinctUntilChanged, filter, startWith, map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
+const BASE_URL = `http://www.omdbapi.com/?apikey=`
 const API_KEY = 83513884
 
 @Component({
@@ -17,13 +18,38 @@ const API_KEY = 83513884
 export class MainFormComponent implements OnInit {
 	myForm: FormGroup;
 	countryOptions: string[] = ['Ireland', 'United Kingdom'];
-	movieList: string[] = ['Episode 1', 'Episode 2', 'The return of the Jedi']
-	filteredMovies: Observable<string[]>
+
+	// Autocomplete
+	favMovieCtrl = new FormControl();
+	// TODO - Set Type
+	filteredMovies: any;
+	isLoading = false;
+	errorMsg!: string;
+	minLengthTerm = 3;
+
+
 	constructor(
 		private fb: FormBuilder,
 		private dataService: UserdataService,
-		private postCodeValidator: postCodeValidator
+		private postCodeValidator: postCodeValidator,
+		private http: HttpClient
 	) { }
+
+	onSelected(e) {
+		console.log(e.option.value);
+		console.log(this.favMovieCtrl);
+    this.favMovieCtrl.setValue(e.option.value);
+  }
+
+  displayWith(value: any) {
+    return value?.Title;
+  }
+
+  clearSelection() {
+    this.favMovieCtrl.setValue('');
+    this.filteredMovies = [];
+  }
+
 
 	ngOnInit(): void {
 		this.myForm = this.fb.group({
@@ -38,6 +64,7 @@ export class MainFormComponent implements OnInit {
 			validators: [this.postCodeValidator.checkUKvalidity()],
 			updateOn: 'blur'
 		});
+		this.setUpMovieSearch();
 	}
 
 	// Getters to simplify HTML template
@@ -45,14 +72,51 @@ export class MainFormComponent implements OnInit {
 	get userName() { return this.myForm.get('userName'); }
 	get country() { return this.myForm.get('country'); }
 	get postCode() { return this.myForm.get('postCode'); }
-	get favMovie() { return this.myForm.get('favMovie'); }
+	get favMovie() { return this.favMovieCtrl.value; }
+
+
+	setUpMovieSearch() {
+		this.favMovieCtrl.valueChanges
+			.pipe(
+				filter(res => {
+					return res !== null && res.length >= this.minLengthTerm
+				}),
+				distinctUntilChanged(),// Prevents duplicate calls
+				debounceTime(800), // Wait 800ms after last keystroke before considering the term
+				tap(() => {
+					this.errorMsg = "";
+					this.isLoading = true;
+					this.filteredMovies = [];
+				}),
+				switchMap(value => this.http.get(`${BASE_URL}${API_KEY}&s=${value}`)
+					.pipe(
+						finalize(() => {
+							this.isLoading = false
+						}),
+					))
+			)
+			.subscribe((data: any) => {
+				if (data["Search"] === undefined) {
+					this.errorMsg = data[`Error`];
+					this.filteredMovies = [];
+				} else {
+					this.errorMsg = "";
+					this.filteredMovies = data["Search"];
+				}
+				console.log(this.filteredMovies);
+			});
+	}
 
 	submitForm() {
-		// console.log(this.myForm);
+		console.log(this.favMovieCtrl.value);
+		console.log(this.myForm);
 		if (this.myForm.invalid) {
 			console.error('Form is invalid');
 			return
 		}
+		this.myForm.patchValue({
+			favMovie: this.favMovieCtrl.value
+		})
 		this.dataService.setUserData(this.myForm.value);
 	}
 }

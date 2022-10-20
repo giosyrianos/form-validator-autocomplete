@@ -29,18 +29,45 @@
 		<small class="error" *ngIf="myForm?.errors?.falsePostCode">This is not a valid UK Post Code</small>
 		<small class="error" *ngIf="myForm?.errors?.emptyPostCode">Post Code is required for UK</small>
 	</div>
-	<!--
+
 	<div>
 		<label>Favorite Movie</label>
-		<mat-form-field class="example-full-width" appearance="fill">
-			<input type="text" placeholder="Start typing..." aria-label="Movie" matInput formControlName="favMovie"
-				[matAutocomplete]="auto">
-			<mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
-				<mat-option *ngFor="let movie of movieList" [value]="movie">
-					{{movie}}
-				</mat-option>
+		<mat-form-field appearance="fill">
+			<input
+				matInput
+				placeholder="Search Movie (min 3 characters)"
+				[value]="favMovie"
+				[matAutocomplete]="auto"
+      	[formControl]="favMovieCtrl"
+			>
+			<button *ngIf="favMovie" matSuffix mat-icon-button aria-label="Clear" (click)="clearSelection()">
+				<mat-icon>close</mat-icon>
+			</button>
+			<mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" (optionSelected)="onSelected($event)" [panelWidth]="400" [displayWith]="displayWith">
+				<mat-option *ngIf="isLoading" class="is-loading">Loading...⏳</mat-option>
+				<ng-container *ngIf="!isLoading">
+					<mat-option *ngFor="let movie of filteredMovies" [value]="movie">
+						<span><b>{{movie.Title}}</b> ({{movie.Year}})</span>
+					</mat-option>
+				</ng-container>
 			</mat-autocomplete>
 		</mat-form-field>
-	</div> -->
+		<ng-container *ngIf="errorMsg; else elseTemplate">
+			{{errorMsg}}
+		</ng-container>
+		<ng-template #elseTemplate>
+			<div class="movie-details" *ngIf="favMovie?.Title">
+				<div>
+					<img [src]="favMovie?.Poster" style="height: 250px;" />
+				</div>
+				<div>
+					<h3>Selected Value: {{favMovie?.Title}}</h3>
+					<ul>
+						<li>Year: {{favMovie?.Year}}</li>
+					</ul>
+				</div>
+			</div>
+		</ng-template>
+	</div>
 	<button mat-raised-button color="primary" type="submit">Submit!</button>
 </form>

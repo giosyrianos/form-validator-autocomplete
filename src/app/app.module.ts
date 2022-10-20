@@ -5,7 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-
+import { HttpClientModule } from '@angular/common/http';
 
 import { AngularMaterialModule } from './angular-material.module';
 import { MainFormComponent } from './components/main-form/main-form.component';
@@ -23,7 +23,8 @@ import { ResultsComponent } from './components/results/results.component';
     BrowserAnimationsModule,
 		AngularMaterialModule,
 		ReactiveFormsModule,
-		FormsModule
+		FormsModule,
+		HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -3,5 +3,5 @@ export interface Roomex {
 	userName: string;
 	country: string;
 	postCode?: string;
-	favMovie?: string;
+	favMovie?: any;
 }
