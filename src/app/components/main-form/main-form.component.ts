@@ -10,9 +10,9 @@ import { Observable } from 'rxjs';
 const API_KEY = 83513884
 
 @Component({
-  selector: 'app-main-form',
-  templateUrl: './main-form.component.html',
-  styleUrls: ['./main-form.component.scss']
+	selector: 'app-main-form',
+	templateUrl: './main-form.component.html',
+	styleUrls: ['./main-form.component.scss']
 })
 export class MainFormComponent implements OnInit {
 	myForm: FormGroup;
@@ -38,18 +38,18 @@ export class MainFormComponent implements OnInit {
 			validators: [this.postCodeValidator.checkUKvalidity()],
 			updateOn: 'blur'
 		});
-  }
+	}
 
 	// Getters to simplify HTML template
 	get name() { return this.myForm.get('name'); }
 	get userName() { return this.myForm.get('userName'); }
-	get country () { return this.myForm.get('country'); }
+	get country() { return this.myForm.get('country'); }
 	get postCode() { return this.myForm.get('postCode'); }
 	get favMovie() { return this.myForm.get('favMovie'); }
 
 	submitForm() {
 		// console.log(this.myForm);
-		if(this.myForm.invalid) {
+		if (this.myForm.invalid) {
 			console.error('Form is invalid');
 			return
 		}
