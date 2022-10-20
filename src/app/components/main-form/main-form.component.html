@@ -47,7 +47,7 @@
 				<mat-option *ngIf="isLoading" class="is-loading">Loading...⏳</mat-option>
 				<ng-container *ngIf="!isLoading">
 					<mat-option *ngFor="let movie of filteredMovies" [value]="movie">
-						<span><b>{{movie.Title}}</b> ({{movie.Year}})</span>
+						<span><b>{{movie.title}}</b> ({{movie.year}})</span>
 					</mat-option>
 				</ng-container>
 			</mat-autocomplete>
@@ -56,14 +56,14 @@
 			{{errorMsg}}
 		</ng-container>
 		<ng-template #elseTemplate>
-			<div class="movie-details" *ngIf="favMovie?.Title">
+			<div class="movie-details" *ngIf="favMovie?.title">
 				<div>
-					<img [src]="favMovie?.Poster" style="height: 250px;" />
+					<img [src]="favMovie?.poster" style="height: 250px;" />
 				</div>
 				<div>
-					<h3>Selected Value: {{favMovie?.Title}}</h3>
+					<h3>Selected Value: {{favMovie?.title}}</h3>
 					<ul>
-						<li>Year: {{favMovie?.Year}}</li>
+						<li>Year: {{favMovie?.year}}</li>
 					</ul>
 				</div>
 			</div>

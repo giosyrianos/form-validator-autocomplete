@@ -82,7 +82,7 @@ export class MainFormComponent implements OnInit {
 					return res !== null && res.length >= this.minLengthTerm
 				}),
 				distinctUntilChanged(),// Prevents duplicate calls
-				debounceTime(800), // Wait 800ms after last keystroke before considering the term
+				debounceTime(500), // Wait 500ms after last keystroke before considering the term
 				tap(() => {
 					this.errorMsg = "";
 					this.isLoading = true;
@@ -90,18 +90,34 @@ export class MainFormComponent implements OnInit {
 				}),
 				switchMap(value => this.http.get(`${BASE_URL}${API_KEY}&s=${value}`)
 					.pipe(
+						map((movieData: any) => {
+							console.log(movieData);
+							// Normalize data from API to match Movie interface
+							return {
+								error: movieData.Error,
+								movies: movieData['Search']?.map(movie => {
+									return {
+										title: movie['Title'],
+										year: movie['Year'],
+										id: movie['imdbID'],
+										type: movie['Type'],
+										poster: movie['Poster']
+									}
+								})
+							}
+						 }),
 						finalize(() => {
 							this.isLoading = false
 						}),
 					))
 			)
-			.subscribe((data: any) => {
-				if (data["Search"] === undefined) {
-					this.errorMsg = data[`Error`];
+			.subscribe((normalizedData: any) => {
+				if (normalizedData.error) {
+					this.errorMsg = normalizedData.error;
 					this.filteredMovies = [];
 				} else {
 					this.errorMsg = "";
-					this.filteredMovies = data["Search"];
+					this.filteredMovies = [...normalizedData.movies];
 				}
 				console.log(this.filteredMovies);
 			});
