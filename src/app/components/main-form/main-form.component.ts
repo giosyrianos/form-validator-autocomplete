@@ -4,6 +4,9 @@ import { postCodeValidator } from './postCode.validator';
 import { UserdataService } from '../../services/userdata.service';
 import { HttpClient } from '@angular/common/http'
 
+import { Roomex } from '../../models/roomexForm.model';
+import { Movie } from '../../models/movie.model';
+
 import { debounceTime, tap, switchMap, finalize, distinctUntilChanged, filter, startWith, map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
@@ -21,8 +24,7 @@ export class MainFormComponent implements OnInit {
 
 	// Autocomplete
 	favMovieCtrl = new FormControl();
-	// TODO - Set Type
-	filteredMovies: any;
+	filteredMovies: Movie [] = [];
 	isLoading = false;
 	errorMsg!: string;
 	minLengthTerm = 3;
@@ -123,7 +125,7 @@ export class MainFormComponent implements OnInit {
 			});
 	}
 
-	submitForm() {
+	submitForm(): Roomex | void {
 		console.log(this.favMovieCtrl.value);
 		console.log(this.myForm);
 		if (this.myForm.invalid) {
