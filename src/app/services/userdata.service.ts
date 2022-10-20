@@ -18,7 +18,7 @@ export class UserdataService {
 	setUserData(data: Roomex) {
 		this.userData = data;
 		this.userDataListener.next(this.userData);
-		this.router.navigate(['/results']);
+		this.router.navigate(['/thankyou']);
 	}
 
 	getUpdatedUserData() {

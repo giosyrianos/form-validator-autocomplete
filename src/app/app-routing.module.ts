@@ -6,7 +6,7 @@ import { ResultsComponent } from './components/results/results.component';
 
 const routes: Routes = [
 	{ path: '', component: MainFormComponent },
-	{ path: 'results', component: ResultsComponent },
+	{ path: 'thankyou', component: ResultsComponent },
 	{ path: '**', redirectTo: '' }
 ];
 
