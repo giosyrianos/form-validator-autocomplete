@@ -1,0 +1,14 @@
+.card-container {
+	display: grid;
+	place-items: center;
+	max-width: 60vh;
+	overflow-x: hidden;
+}
+
+.mat-card {
+	width: 500px
+}
+
+.mat-card-image {
+	height: 100%;
+}
