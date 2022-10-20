@@ -38,8 +38,6 @@ export class MainFormComponent implements OnInit {
 	) { }
 
 	onSelected(e) {
-		console.log(e.option.value);
-		console.log(this.favMovieCtrl);
     this.favMovieCtrl.setValue(e.option.value);
   }
 
@@ -93,7 +91,6 @@ export class MainFormComponent implements OnInit {
 				switchMap(value => this.http.get(`${BASE_URL}${API_KEY}&s=${value}`)
 					.pipe(
 						map((movieData: any) => {
-							console.log(movieData);
 							// Normalize data from API to match Movie interface
 							return {
 								error: movieData.Error,
@@ -114,6 +111,7 @@ export class MainFormComponent implements OnInit {
 					))
 			)
 			.subscribe((normalizedData: any) => {
+				// console.log(this.filteredMovies);
 				if (normalizedData.error) {
 					this.errorMsg = normalizedData.error;
 					this.filteredMovies = [];
@@ -121,13 +119,11 @@ export class MainFormComponent implements OnInit {
 					this.errorMsg = "";
 					this.filteredMovies = [...normalizedData.movies];
 				}
-				console.log(this.filteredMovies);
+				// console.log(this.filteredMovies);
 			});
 	}
 
 	submitForm(): Roomex | void {
-		console.log(this.favMovieCtrl.value);
-		console.log(this.myForm);
 		if (this.myForm.invalid) {
 			console.error('Form is invalid');
 			return
