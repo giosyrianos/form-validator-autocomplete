@@ -1,8 +1,8 @@
-# RoomexForm
+# Angular 14 reactive forms
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.2.6.
 ## Implementation
-The application uses Angular 14. User Input is handled with reactive form and the Post Code field has a custom validator in order to combine the country value. UI is implemented with Angular Material and SCSS. Files and Folders are structured to support an application of a larger scale
+The application uses Angular 14. User Input is handled with reactive form and the Post Code field has a custom validator in order to combine the country value. Autocomlete uses suggestions from external API. UI is implemented with Angular Material and SCSS. Files and Folders are structured to support an application of a larger scale
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
